@@ -1,0 +1,234 @@
+<!-- <h1>Open Positions</h1>
+<ul>
+  {% for job in jobs %}
+    <li><a href="{% url 'job_detail' job.id %}">{{ job.title }}</a> - {{ job.location }}</li>
+  {% endfor %}
+</ul> -->
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Listings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Available Job Openings</h2>
+        <div class="row">
+            {% for job in jobs %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ job.title }}</h5>
+                            <p class="card-text">{{ job.description|truncatechars:100 }}</p>
+                            <a href="{% url 'job_detail' job.id %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No jobs posted yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html> {% endcomment %}
+
+
+
+
+
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Listings</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="text-center mb-4">Available Job Openings</h1>
+    
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for job in jobs %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ job.title }}</h5>
+            <p class="card-text">{{ job.description|truncatechars:150 }}</p>
+            <p class="text-muted">Location: {{ job.location }}</p>
+            <a href="{% url 'job_details' job.id %}" class="btn btn-outline-primary">View Details</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+        <p class="text-center">No jobs available right now.</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html> {% endcomment %}
+
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Listings | Civora Nexus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #f0f2f5, #e3f2fd);
+        }
+        .card:hover {
+            transform: scale(1.02);
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .badge-location {
+            background-color: #0d6efd;
+            font-size: 0.75rem;
+        }
+        .job-title {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .card-text {
+            font-size: 0.9rem;
+        }
+
+        .apply-box {
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 400;
+            display: inline-block;
+            transition: background-color 0.2s ease;
+        }
+        .apply-box:hover {
+            background-color: #218838;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <h2 class="text-center mb-4 display-5 text-primary fw-bold">👋 Welcome to the Job Portal</h2>
+        <p class="text-center text-muted mb-5">Explore career opportunities that align with your future goals.</p>
+
+        <div class="text-center mb-4">
+            <a href="{% url 'chatbot' %}" class="btn btn-info btn-lg">💬 Talk to Career Assistant</a>
+        </div>
+
+
+        
+        <div class="row">
+            {% for job in jobs %}
+                <div class="col-md-4 d-flex">
+                    <div class="card mb-4 w-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <span class="badge badge-location mb-2">{{ job.location }}</span>
+                            <h5 class="job-title">{{ job.title }}</h5>
+                            <p class="card-text text-muted">{{ job.description|truncatechars:120 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{% url 'job_detail' job.id %}" class="btn btn-outline-primary btn-sm">View Details</a>
+                                {% if job.application_link %}
+                                <a href="{{ job.application_link }}" target="_blank" class="apply-box">✅Apply on Company Website</a>
+                                {% endif %}
+                                <small class="text-muted">📅 {{ job.posted_on }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-muted">No jobs posted yet. Please check back later.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html> {% endcomment %}
+
+<!-- templates/job_listings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Listings | Civora Nexus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+        }
+        .card:hover {
+            transform: scale(1.02);
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .job-title {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .apply-box {
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .apply-box:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <h2 class="text-center mb-4 display-6 text-primary fw-bold" data-aos="fade-down">🚀 Available Job Openings</h2>
+        <p class="text-center text-muted mb-5" data-aos="fade-up">Find the opportunity that suits your skills and goals.</p>
+
+        <div class="text-center mb-4">
+            <a href="{% url 'chatbot' %}" class="btn btn-outline-info" data-aos="zoom-in">💬 Talk to Career Assistant</a>
+        </div>
+
+        <div class="row">
+            {% for job in jobs %}
+                <div class="col-md-4 d-flex" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+                    <div class="card mb-4 w-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">{{ job.location }}</span>
+                            <h5 class="job-title">{{ job.title }}</h5>
+                            <p class="text-muted">{{ job.description|truncatechars:120 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{% url 'job_detail' job.id %}" class="btn btn-outline-primary btn-sm">View Details</a>
+                                {% if job.application_link %}
+                                    <a href="{{ job.application_link }}" class="apply-box" target="_blank">✅ Apply on Company Site</a>
+                                {% else %}
+                                    <a href="{% url 'apply' job.id %}" class="apply-box">Apply Now</a>
+                                {% endif %}
+                            </div>
+                            <small class="text-muted d-block mt-2">📅 {{ job.posted_at|date:"M d, Y" }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-muted">No jobs posted yet. Please check back later.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>
